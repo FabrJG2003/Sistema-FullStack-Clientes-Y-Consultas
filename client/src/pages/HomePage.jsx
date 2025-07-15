@@ -6,7 +6,7 @@ function HomePage() {
       <section className="relative">
         <div className="absolute inset-0 z-0">
           <img
-            src = "../public/images/fondo.jpg"
+            src = "../images/fondo.jpg"
             alt = "Fondo"
             className="w-full h-full object-cover"
           />
@@ -43,7 +43,7 @@ function HomePage() {
           </div>
           <div>
             <img
-              src = "../public/images/img_1.jpg"
+              src = "/images/img_1.jpg"
               alt = "Gerente"
               className="w-full h-full object-cover"
             />

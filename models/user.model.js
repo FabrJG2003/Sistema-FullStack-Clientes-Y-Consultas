@@ -18,7 +18,12 @@ const userSchema = new mongoose.Schema({
     },
     type_User: {
         type: String,
+        enum: ['Gerente', 'Contador', 'Administrador'],
         required: true
+    },
+    date: {
+        type: Date,
+        default: Date.now,
     }
 },{
     timestamps: true

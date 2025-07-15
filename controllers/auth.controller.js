@@ -2,7 +2,6 @@ import User from '../models/user.model.js';
 import {createAccessToken} from '../libs/jwt.js';
 import bcrypt from 'bcrypt';
 import {TOKEN_SECRET} from '../config.js';
-import e from 'express';
 import jwt from 'jsonwebtoken';
 
 export const login = async(req, res) => {
@@ -22,9 +21,10 @@ export const login = async(req, res) => {
         );
 
         const token = await createAccessToken({ id: userFound._id });
-        res.cookie('token',token)
+        res.cookie('token',token, {})
         res.json({
             message: "User Logged sucessful",
+            username: userFound.username,
             id: userFound._id,
             email: userFound.email,
             password: userFound.password,
@@ -73,7 +73,38 @@ export const verifyToken = async (req, res) => {
             id: userFound._id,
             username: userFound.username,
             email: userFound.email,
-            type_User: userFound.type_User
+            type_User: userFound.type_User,
+            password: userFound.password,
+            date: userFound.date,
         })
     })
 };
+
+export const updateUser = async (req, res) => {
+    try {
+        console.log("Hola4")
+        console.log("ID recibido:", req.params.id);
+        console.log("Datos recibidos:", req.body);
+        const { username, password } = req.body;
+
+        const updateData = {};
+
+        if (username) updateData.username = username;
+        if (password) {
+            const salt = await bcrypt.genSalt(10);
+            const passwordHashed = await bcrypt.hash(password, salt);
+            updateData.password = passwordHashed; 
+        }
+
+        const updateUser = await User.findByIdAndUpdate(
+            req.params.id,
+            { $set: updateData },
+            { new: true }
+        ).select('-password');
+        if (!updateUser) return res.status(404).json({ message: "Usuario no encontrado." });
+        res.status(200).json(updateUser);
+    } catch (error) {
+        console.error("Error al actualizar usuario: ", error);
+        res.status(500).json({ message: "Error en el servidor." });
+    }
+}

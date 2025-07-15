@@ -10,6 +10,7 @@ export default {
       fontFamily: {
         CalSans: ['Cal Sans', 'sans-serif'],
         Roboto: ['Roboto', 'sans-serif'],
+        Inter: ['Inter', 'sans-serif'],
       },
     },
   },

@@ -9,8 +9,8 @@ const createUser = async () => {
 
         // Datos del usuario
         const userData = {
-            username: "contador1",
-            email: "contador1@example.com",
+            username: "contador3",
+            email: "contador3@example.com",
             password: "contador",
             type_User: "Contador"
         };

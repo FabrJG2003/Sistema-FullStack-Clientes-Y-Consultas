@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
 import { use, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-//import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { set } from "mongoose";
 
@@ -18,11 +17,9 @@ function LoginPage() {
     const onSubmit = handleSubmit((data) => {
         signin(data); 
     })
-
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     }
-
     useEffect(() => {
         if(isAuthenticated){
           navigate("/home");

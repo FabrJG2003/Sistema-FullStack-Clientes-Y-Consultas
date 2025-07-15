@@ -1,6 +1,6 @@
 import { useAuth } from '../context/AuthContext';
-import HomeUser_Gerente from './HomeUser_Gerente';
-import HomeUser_Contador from './HomeUser_Contador';
+import HomeUser_Gerente from './user_gerente/HomeUser_Gerente';
+import HomeUser_Contador from './user_contador/HomeUser_Contador';
 
 function HomeLayout() {
     const { user } = useAuth();

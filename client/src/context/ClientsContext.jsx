@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 
-import { createClientsRequest, getClientsRequest } from "../api/clients"
+import { createClientsRequest, getClientsRequest, getClientRequest, updateClientsRequest, getClientByNameRequest, deleteClientsRequest } from "../api/clients"
 
 const ClientContext = createContext();
 
@@ -15,7 +15,7 @@ export const useClients = () => {
 export function ClientsProvider({ children }) {
 
     const [clients, setClients] = useState([]);
-
+    
     const getClients = async () => {
       try {
         const res = await getClientsRequest();
@@ -31,11 +31,52 @@ export function ClientsProvider({ children }) {
         console.log(res)
     }
 
+    const getClient = async (id) => {
+      try {
+        const res = await getClientRequest(id)
+        console.log(res )
+        return res.data
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    const getClientName = async (name) => {
+      try {
+        const res = await getClientByNameRequest(name)
+        return res.data
+      } catch (error) {
+        console.log (error)
+      }
+    }
+
+    const updateClient = async (id, client) => {
+      try {
+        await updateClientsRequest(id, client)
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    const deleteClient = async (id) => {
+      try {
+        const res = await deleteClientsRequest(id);
+        if (res.status === 204) setClients(clients.filter(client => client._id !== id))
+        return res
+      } catch (error) {
+
+      }
+    }
+
   return (
     <ClientContext.Provider value={{
         clients,
         createClient,
         getClients,
+        getClient,
+        updateClient,
+        getClientName,
+        deleteClient,
     }}>
       {children}
     </ClientContext.Provider>
